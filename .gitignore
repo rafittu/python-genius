@@ -1,0 +1,17 @@
+# Ambiente virtual
+.venv/
+
+# Environments
+.env
+
+# Arquivos temporários
+*.swp
+*.swo
+*.tmp
+*.temp
+
+# Arquivos compilados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
