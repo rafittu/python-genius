@@ -1,4 +1,4 @@
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 from flask import Blueprint
 
 color_api_bp = Blueprint('color_api', __name__)
@@ -12,5 +12,6 @@ def init_sockets(app):
 @socketio.on('send_color')
 def handle_receive_color(data):
     color = data.get('color')
-    print(f"Received: {color}")
-    emit('Response', {'message': f"Color {color} received successfully!"})
+    timestamp = data.get('timestamp')
+
+    print(f"Received color: {color} at timestamp: {timestamp}")
