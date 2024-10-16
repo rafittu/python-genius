@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, func
-from src.db.database import db
+from database.database import db
 
 class Color(db.Model):
     __tablename__ = 'colors'

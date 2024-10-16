@@ -2,8 +2,8 @@ import re
 import logging
 from flask_socketio import SocketIO
 from flask import Blueprint
-from src.database.models.color import Color
-from src.database.database import db
+from database.models.color import Color
+from database.database import db
 
 color_api_bp = Blueprint('color_api', __name__)
 socketio = SocketIO(cors_allowed_origins="*")

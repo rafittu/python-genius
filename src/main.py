@@ -1,6 +1,9 @@
+from dotenv import load_dotenv
 from flask import Flask
 from api.color_api import color_api_bp, init_sockets, socketio
 from database.database import init_app, db
+
+load_dotenv()
 
 
 def create_app():
