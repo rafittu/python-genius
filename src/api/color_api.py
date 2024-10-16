@@ -25,6 +25,10 @@ def parse_rgb(color_str):
     raise ValueError("Invalid color format")
 
 
+def get_color_name(color_str):
+    return COLOR_MAP.get(color_str, "unknown")
+
+
 def init_sockets(app):
     socketio.init_app(app)
 
