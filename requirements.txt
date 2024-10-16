@@ -1,5 +1,7 @@
 python-dotenv==1.0.0
 flask-socketio==5.4.1
 eventlet==0.37.0
+Flask==2.2.5  
 Flask-SQLAlchemy==2.5.1
 SQLAlchemy==1.4.22
+psycopg2-binary==2.9.10
