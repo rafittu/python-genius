@@ -40,6 +40,10 @@ def get_color_name(color_str):
     return COLOR_MAP.get(color_str, "unknown")
 
 
+def map_rgb_to_color_name(rgb_value):
+    closest_color = min(COLOR_MAP.keys(), key=lambda x: sum(abs(int(c) - v) for c, v in zip(x[4:-1].split(', '), rgb_value)))
+    return COLOR_MAP[closest_color]
+
 @socketio.on('send_color')
 def handle_receive_color(data):
     color_str = data.get('color')
@@ -61,14 +65,20 @@ def handle_receive_color(data):
 
         color_buffer.append(new_color)
 
-        if len(color_buffer) == 9:
-            predicted_color = predict_next_color()
+        print(f"Buffer len: {len(color_buffer)}")
 
-            logger.info(f"Predicted next color (RGB): {predicted_color}")
-            print(f"Predicted next color (RGB): {predicted_color}")
+        if len(color_buffer) == 9:
+            predicted_rgb = predict_next_color()
+            predicted_color_name = map_rgb_to_color_name(predicted_rgb)
+
+            logger.info(f"Predicted next color (RGB): {predicted_color_name} {predicted_rgb}")
+            print(f"Predicted next color (RGB): {predicted_color_name} {predicted_rgb}")
 
             train_model(n=10)
 
+            color_buffer.clear()
+
+        if len(color_buffer) == 10:
             color_buffer.clear()
 
     except ValueError as e:

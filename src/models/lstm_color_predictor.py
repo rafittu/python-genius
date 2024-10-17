@@ -35,4 +35,5 @@ def predict_next_color():
     last_colors = get_last_n_colors(1)
     if last_colors.size > 0:
         prediction = model.predict(last_colors.reshape((1, 1, 3)))
-        return (prediction[0][0] * 255).astype(int)
+        rgb_values = (prediction[0] * 255).astype(int).flatten()
+        return tuple(rgb_values)
