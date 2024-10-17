@@ -20,3 +20,12 @@ def get_last_n_colors(n):
     colors.reverse()
     data = np.array([[c.red, c.green, c.blue] for c in colors]) / 255.0
     return data
+
+
+def train_model(n):
+    data = get_last_n_colors(n)
+    if len(data) > 1:
+        X, y = data[:-1], data[1:]
+        X = X.reshape((1, X.shape[0], X.shape[1]))
+        y = y.reshape((1, y.shape[0], y.shape[1]))
+        model.fit(X, y, epochs=1, verbose=0)
