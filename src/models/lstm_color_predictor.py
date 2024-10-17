@@ -29,3 +29,10 @@ def train_model(n):
         X = X.reshape((1, X.shape[0], X.shape[1]))
         y = y.reshape((1, y.shape[0], y.shape[1]))
         model.fit(X, y, epochs=1, verbose=0)
+
+
+def predict_next_color():
+    last_colors = get_last_n_colors(1)
+    if last_colors.size > 0:
+        prediction = model.predict(last_colors.reshape((1, 1, 3)))
+        return (prediction[0][0] * 255).astype(int)
