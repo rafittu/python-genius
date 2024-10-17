@@ -1,6 +1,8 @@
+import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.optimizers import Adam
+from database.models.color import Color
 
 def create_model(input_shape):
     model = Sequential()
@@ -11,3 +13,10 @@ def create_model(input_shape):
 
 
 model = create_model((None, 3))
+
+
+def get_last_n_colors(n):
+    colors = Color.query.order_by(Color.timestamp.desc()).limit(n).all()
+    colors.reverse()
+    data = np.array([[c.red, c.green, c.blue] for c in colors]) / 255.0
+    return data
