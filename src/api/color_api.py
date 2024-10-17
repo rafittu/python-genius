@@ -4,10 +4,13 @@ from flask_socketio import SocketIO
 from flask import Blueprint
 from database.models.color import Color
 from database.database import db
+from models.lstm_color_predictor import train_model, predict_next_color
 
 color_api_bp = Blueprint('color_api', __name__)
 socketio = SocketIO(cors_allowed_origins="*")
 logger = logging.getLogger(__name__)
+
+color_buffer = []
 
 COLOR_MAP = {
     "rgb(0, 0, 255)": "blue",
@@ -55,5 +58,18 @@ def handle_receive_color(data):
         )
         db.session.add(new_color)
         db.session.commit()
+
+        color_buffer.append(new_color)
+
+        if len(color_buffer) == 9:
+            predicted_color = predict_next_color()
+
+            logger.info(f"Predicted next color (RGB): {predicted_color}")
+            print(f"Predicted next color (RGB): {predicted_color}")
+
+            train_model(n=10)
+
+            color_buffer.clear()
+
     except ValueError as e:
         logger.error(f"Error processing color: {e}")
